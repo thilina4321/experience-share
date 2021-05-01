@@ -1,0 +1,22 @@
+.header {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+}
+
+.h1 {
+    flex: 1;
+}
+
+.header p{
+    margin: 0 5px;
+
+}
+
+@media (min-width:700px) {
+    .header{
+        display: flex;
+    }
+}
