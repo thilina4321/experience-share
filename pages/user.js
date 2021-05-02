@@ -1,8 +1,8 @@
-import User from '../components/user/profile'
+import Profile from '../components/user/profile'
 const UserPage = () => {
     return (
         <div>
-            <User />
+            <Profile />
         </div>
     )
 }

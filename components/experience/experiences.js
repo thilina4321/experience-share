@@ -12,9 +12,10 @@ const experiences = [
   
 ];
 
-const Experiences = () => {
+const Experiences = (props) => {
+  const {noMargin} = props
   return (
-    <div className={classes.div}>
+    <div className={classes.div} style={noMargin && {marginTop:0}}>
       {experiences.map(({ user, id, userImage, description, imageUrl }) => (
         <Experience
           key={id}

@@ -1,11 +1,11 @@
 import Image from "next/image";
-import { Comment, LinkedCamera } from "@material-ui/icons";
+import LinkedCamera from "@material-ui/icons/LinkedCamera";
+import Comment from "@material-ui/icons/Comment";
 import classes from './experience.module.css'
 
 const Experience = (props) => {
   const { user, id, userImage, description, imageUrl } = props;
 
-  console.log(props);
   return (
     <article className={classes.article}>
 

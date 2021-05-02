@@ -1,22 +1,18 @@
 import { useState } from "react";
 import Link from "next/link";
-import {
-  Drawer,
-  ListItem,
-  List,
-  ListItemText,
-  Button,
-  ListItemIcon,
-} from "@material-ui/core";
-import {
-  HomeOutlined,
-  Person,
-  Beenhere,
-  Bookmark,
-  ImportantDevices,
-  ContactMail,
-} from "@material-ui/icons";
+import Drawer from "@material-ui/core/Drawer";
+import ListItem from "@material-ui/core/ListItem";
+import List from "@material-ui/core/List";
+import ListItemText from "@material-ui/core/ListItemText";
+import Button from "@material-ui/core/Button";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
 
+import HomeOutlined from "@material-ui/icons/HomeOutlined";
+import Person from "@material-ui/icons/Person";
+import Beenhere from "@material-ui/icons/Beenhere";
+import Bookmark from "@material-ui/icons/Bookmark";
+import ImportantDevices from "@material-ui/icons/ImportantDevices";
+import ContactMail from "@material-ui/icons/ContactMail";
 import classes from "./main-header.module.css";
 
 const items = ["Experiences","Login", "Signup", "User", "Experience"];
