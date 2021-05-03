@@ -5,6 +5,7 @@
     justify-content: flex-start;
     align-items: flex-start;
     padding: 10px;
+    width: 100%;
 }
 
 .user{
@@ -16,9 +17,33 @@
 
 .img{
     border-radius: 50%;
+    height: 100px;
+    width: 100px;
     
 }
 
 .h1{
 margin-left: 20px;
+}
+
+.input{
+    visibility: hidden;
+}
+
+.imageDialog{
+    z-index: 20;
+    width: 90%;
+    margin: 0 auto;
+    border: none;
+    box-shadow: 0 2px 2px 2px rgba(0,0,0,0.26);
+    border-radius: 20px;
+    
+
+}
+
+.avatar{
+    background-color: black;
+    height: 120px;
+    width: 150px;
+    border-radius: 50%;
 }

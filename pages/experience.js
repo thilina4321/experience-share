@@ -3,7 +3,7 @@ const Experience = () => {
     return (
         <div>
             <NewExe />
-        </div>
+        </div> 
     )
 }
 

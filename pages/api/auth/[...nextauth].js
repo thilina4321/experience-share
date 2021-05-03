@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth'
 import Provider from 'next-auth/providers'
+import bcryptjs from 'bcryptjs'
 
 // database imports
 import {connectDB} from '../../../db/database'
@@ -22,16 +23,16 @@ export default NextAuth({
                     const user = await User.findOne({email:credentials.email})
                     console.log(user);
                     if(!user){
-                        return new Error('User not found')
+                        throw new Error('User not found')
                     }
 
-                    // const isValid = await comparePassword(credentials.password, user.password)
-                    // if(!isValid){
-                    //     throw new Error('Could not log in!')
-                    // }
+                    const isValid = await bcryptjs.compare(credentials.password, user.password)
+                    if(!isValid){
+                        throw new Error('Sorry invalid user name or password')
+                    }
 
                     // set email to the jwt token
-                    return {email:user.email, name:user._id}
+                    return {email:user._id, name:user.userName, image:user.profileImage}
 
                 } catch (error) {
                     throw new Error(error.message || 'Something went wrong')

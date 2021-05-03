@@ -1,5 +1,6 @@
 import User from '../../../model/user'
 import {connectDB} from '../../../db/database'
+import bcryptjs from 'bcryptjs'
 
 export default async(req,res)=>{
     if(req.method == 'POST'){
@@ -9,7 +10,10 @@ export default async(req,res)=>{
             await connectDB()
 
             const {userName, email, password} = req.body
-            const user = await User.create({email, password, userName})
+            const hash = await bcryptjs.hash(password, 8)
+            const user = await User.create({email, password:hash, userName})
+
+
 
             res.status(201).send({user})
         

@@ -13,14 +13,16 @@ const experiences = [
 ];
 
 const Experiences = (props) => {
-  const {noMargin} = props
+  const {noMargin, posts} = props
+
+  console.log(posts);
+
   return (
     <div className={classes.div} style={noMargin && {marginTop:0}}>
-      {experiences.map(({ user, id, userImage, description, imageUrl }) => (
+      {posts.map(({  _id, imageUrl, description,userId }) => (
         <Experience
-          key={id}
-          user={user}
-          userImage={userImage}
+          key={_id}
+          user={userId}
           description={description}
           imageUrl={imageUrl}
         />

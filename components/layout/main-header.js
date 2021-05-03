@@ -13,17 +13,22 @@ import Beenhere from "@material-ui/icons/Beenhere";
 import Bookmark from "@material-ui/icons/Bookmark";
 import ImportantDevices from "@material-ui/icons/ImportantDevices";
 import ContactMail from "@material-ui/icons/ContactMail";
-import classes from "./main-header.module.css";
+import LocalDining from "@material-ui/icons/LocalDining";
 
-const items = ["Experiences","Login", "Signup", "User", "Experience"];
-const icons = [
+import classes from "./main-header.module.css";
+import {useSession} from 'next-auth/client'
+
+let icons = [
   <Person />,
   <Beenhere />,
   <Bookmark />,
   <ImportantDevices />,
   <ContactMail />,
+  <LocalDining />
+  
 ];
-const pages = ["/", "/login", "sign-up", "user", "experience"];
+let pages = ["/", "/login", "/sign-up", "/user", "/experience", "/logout" ];
+let items = ["Experiences","Login", "Signup", "User", "Experience", "Logout"];
 
 const MainHeader = () => {
   const [open, setOpen] = useState(false);
@@ -31,6 +36,31 @@ const MainHeader = () => {
   const toggleDrawer = (state) => {
     setOpen(state);
   };
+
+  const [session, loading] = useSession()
+
+
+  if(session && session.user){
+    pages = ["/",  "/user", "/experience", "/logout" ]
+    items = ["Experiences", "User", "Experience", "Logout"]
+    icons = [
+      <Person />,
+      <Beenhere />,
+      <Bookmark />,
+      <ImportantDevices />,
+      
+      
+    ];
+  }else{
+    pages = ["/", "/login", "/sign-up" ]
+    items = ["Experiences","Login", "Signup"]
+    icons =  [
+      <Person />,
+      <Beenhere />,
+      <Bookmark />
+      
+    ];
+  }
 
   const drawer = (
     <div onClick={() => toggleDrawer(false)}>

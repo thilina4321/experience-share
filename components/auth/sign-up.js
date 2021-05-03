@@ -19,6 +19,12 @@ const Singup = () => {
     const password = passwordRef.current.value;
     const userName = userNameRef.current.value;
 
+    if(!email || !password || !userName){
+      console.log('error');
+      setIsError({error:true,msg: 'please enter required data'})
+      return 
+    }
+
     try {
       setIsLoading(true);
       const user = await fetch("http://localhost:3000/api/auth/signup-api", {
@@ -42,7 +48,7 @@ const Singup = () => {
         emailRef.current.value = ''
         passwordRef.current.value = ''
         userNameRef.current.value = ''
-        router.replace('/')
+        router.replace('/login')
       }
     } catch (error) {
       setIsLoading({ error: false, msg: "" });
@@ -64,7 +70,7 @@ const Singup = () => {
         <input type="password" id="password" ref={passwordRef} />
         <Button color="primary" type="submit">
           {" "}
-          Log In{" "}
+          Sign Up{" "}
         </Button>
         <div style={{textAlign:'center'}}>
             {isLoading && <CircularProgress color="secondary" />}

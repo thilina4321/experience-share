@@ -4,21 +4,26 @@ import Comment from "@material-ui/icons/Comment";
 import classes from './experience.module.css'
 
 const Experience = (props) => {
-  const { user, id, userImage, description, imageUrl } = props;
+  const { user, _id, description, imageUrl } = props;
+  const {profileImage, userName} = user
 
+  console.log(profileImage);
   return (
     <article className={classes.article}>
 
     
 
       <div className={classes.user}>
-        <Image className={classes.img} src={userImage} width={50} height={50} />
-        <h4 className={classes.h4}> {user} </h4>
+        {profileImage ? <img className={classes.pro}
+          src={profileImage}  /> :<div className={classes.avatar} /> }
+        <h4 className={classes.h4}> {userName} </h4>
       </div>
 
       <p> {description} </p>
 
-      <Image src={imageUrl} width={500} height={300} />
+      <img className={classes.img}
+      src={imageUrl}
+       />
 
       <div className={classes.bottom}>
         <LinkedCamera />

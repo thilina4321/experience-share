@@ -1,9 +1,32 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import Experiences from '../components/experience/experiences'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Experiences from "../components/experience/experiences";
+import styles from "../styles/Home.module.css";
+import { getSession } from "next-auth/client";
 
-export default function Home() {
+import {user} from './../store/slices/userSlice'
+import {useDispatch, useSelector} from 'react-redux'
+import { useEffect, useState } from "react";
+
+
+export default function Home(props) {
+
+  const [posts, setPosts] = useState([]);
+  
+  useEffect(()=>{
+    const fetchExperiences = async()=>{
+      const res = await fetch('http://localhost:3000/api/user/posts')
+      const posts = await res.json()
+      console.log(posts.posts);
+      setPosts(posts.posts)
+
+    }
+
+
+      fetchExperiences()
+    
+  } ,[])
+  
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,9 +35,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Experiences />
-
-      
+      <Experiences posts={posts}/>
     </div>
-  )
+  );
 }
+
