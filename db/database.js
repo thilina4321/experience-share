@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export const connectDB = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/experience", {
+    await mongoose.connect("mongodb+srv://anuradha:zgDO8HnZlngkWcYL@cluster0.zxwnh.mongodb.net/exe?retryWrites=true&w=majority", {
       useNewUrlParser: true,
     });
     console.log("connext to database");
