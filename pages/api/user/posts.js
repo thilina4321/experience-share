@@ -12,7 +12,6 @@ const cors = Cors({
 // Helper method to wait for a middleware to execute before continuing
 // And to throw an error when an error happens in a middleware
 function runMiddleware(req, res, fn) {
-    await runMiddleware(req, res, cors)
 
   return new Promise((resolve, reject) => {
     fn(req, res, (result) => {
@@ -45,9 +44,9 @@ cloudinary.config({
 export default async(req,res)=>{
     const {imageUrl, userId, description} = req.body
 
+    await runMiddleware(req, res, cors)
     if(req.method == 'POST'){
         try {
-            await runMiddleware(req, res, cors)
 
             const image = await cloudinary.uploader.upload(imageUrl)
             await connectDB()
@@ -59,7 +58,6 @@ export default async(req,res)=>{
     }
     if(req.method == 'GET'){
         try {
-            await runMiddleware(req, res, cors)
 
 
             await connectDB()
@@ -73,7 +71,6 @@ export default async(req,res)=>{
 
     if(req.method == 'DELETE'){
         try {
-            await runMiddleware(req, res, cors)
 
 
             await connectDB()
@@ -87,7 +84,6 @@ export default async(req,res)=>{
     if(req.method == 'PATCH'){
         const data = req.body
         try {
-            await runMiddleware(req, res, cors)
 
 
             await connectDB()
