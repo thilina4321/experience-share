@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^1.5.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.25.1",
+    "cors": "^2.8.5",
     "mongoose": "^5.12.7",
     "next": "10.2.0",
     "next-auth": "^3.19.5",
