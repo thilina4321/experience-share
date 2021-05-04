@@ -36,7 +36,7 @@ const NewExe = () => {
     const label = labelRef.current.value;
 
     setLoading(true)
-    const addPost = await fetch('http://localhost:3000/api/user/posts', {
+    const addPost = await fetch(process.env.PORT + '/api/user/posts', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({imageUrl:image, description:label, userId:user.id})

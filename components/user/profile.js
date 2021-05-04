@@ -85,7 +85,7 @@ const Profile = () => {
     try {
       setLoading(true);
       const userImage = await fetch(
-        "http://localhost:3000/api/user/profile-image",
+        process.env.PORT + "/api/user/profile-image",
         {
           method: "POST",
           body: JSON.stringify({ url: image, id: user.id }),

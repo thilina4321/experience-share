@@ -14,7 +14,7 @@ export default function Home(props) {
   
   useEffect(()=>{
     const fetchExperiences = async()=>{
-      const res = await fetch('http://localhost:3000/api/user/posts')
+      const res = await fetch(process.env.PORT + '/api/user/posts')
       const posts = await res.json()
       console.log(posts.posts);
       setPosts(posts.posts)
