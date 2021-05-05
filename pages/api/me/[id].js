@@ -6,6 +6,8 @@ import Cors from 'cors'
 
 // Initializing the cors middleware
 const cors = Cors({
+  origin:"*",
+
   methods: ['GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'DELETE', 'PATCH'],
 })
 
@@ -29,7 +31,6 @@ export default async(req,res)=>{
     const data = req.query
 
     await runMiddleware(req, res, cors)
-    console.log(data);
     const userId = data.id
     
     if(req.method == 'GET'){
