@@ -23,7 +23,6 @@ const Login = () => {
     // router.replace('/')
 
     if(!email || !password ){
-      console.log('error');
       setError('please enter required data')
       return 
     }
@@ -34,7 +33,7 @@ const Login = () => {
       email,
       password,
     });
-    setIsLoading(true)
+    setIsLoading(false)
     if (user.error) {
       setError(user.error);
       return

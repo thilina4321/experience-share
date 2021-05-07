@@ -46,7 +46,7 @@ const Profile = () => {
 
   useEffect(()=>{
     const fetchExperiences = async()=>{
-      const res = await fetch('http://localhost:3000/api/user/' + user.id)
+      const res = await fetch('/api/user/' + user.id)
       const posts = await res.json()
       setPosts(posts.posts)
 
@@ -60,7 +60,7 @@ const Profile = () => {
 
   useEffect(()=>{
     const me = async()=>{
-      const res = await fetch('http://localhost:3000/api/me/' + user.id)
+      const res = await fetch('/api/me/' + user.id)
       const meName = await res.json()
       setMySelf(meName.user)
       // setPosts(posts.posts)

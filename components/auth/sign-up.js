@@ -20,7 +20,6 @@ const Singup = () => {
     const userName = userNameRef.current.value;
 
     if(!email || !password || !userName){
-      console.log('error');
       setIsError({error:true,msg: 'please enter required data'})
       return 
     }
@@ -34,6 +33,9 @@ const Singup = () => {
       });
 
       setIsLoading(false);
+
+      const a = await user.json()
+      console.log(a);
 
       if (user.status == 200) {
         setIsError({ error: true, msg: "Email already taken" });
@@ -51,7 +53,7 @@ const Singup = () => {
         router.replace('/login')
       }
     } catch (error) {
-      setIsLoading({ error: false, msg: "" });
+      setIsError({ error: false, msg: "" });
     }
   };
 

@@ -4,7 +4,6 @@ import User from '../../../model/user'
 export default async(req,res)=>{
     const data = req.query
 
-    await runMiddleware(req, res, cors)
     const userId = data.id
     
     if(req.method == 'GET'){

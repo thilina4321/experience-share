@@ -18,7 +18,6 @@ cloudinary.config({
 
 export default async(req,res)=>{
     
-  await runMiddleware(req, res, cors)
     const posts = req.query
     const userId = posts['user-posts'][0]
     if(req.method == 'GET'){

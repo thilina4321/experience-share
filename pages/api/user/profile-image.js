@@ -21,7 +21,6 @@ export default async(req,res)=>{
     const {url, id} = req.body
 
 
-    await runMiddleware(req, res, cors)
     try {
 
         const image = await cloudinary.uploader.upload(url)
