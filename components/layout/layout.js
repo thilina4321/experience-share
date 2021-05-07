@@ -2,7 +2,9 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Desktop from "./desktop";
 import MainHeader from "./main-header";
-import { getSession, useSession } from "next-auth/client";
+import {  useSession } from "next-auth/client";
+import {posts as postSlice} from '../../store/slices/postsSlice'
+
 
 import {user} from '../../store/slices/userSlice'
 
@@ -11,11 +13,34 @@ const Layout = (props) => {
 
   const [session] = useSession();
 
+
+  
+  useEffect(()=>{
+    const fetchExperiences = async()=>{
+      const userPosts = []
+      const res = await fetch('/api/user/posts')
+      const posts = await res.json()
+      posts.posts.forEach(element => {
+        userPosts.push({id:element._id, description:element.description,
+           imageUrl:element.imageUrl,
+        userName:element.userId.userName, userImage:element.userId.profileImage})
+      });
+      
+      dispatch(postSlice.allPosts(userPosts))
+      console.log('hello');
+
+    } 
+
+
+      fetchExperiences()
+    
+  } ,[])
+
   
   
   useEffect(() => {
     if (session) {
-      console.log(session);
+
 
       const { image, email, name } = session['user'];
       dispatch(user.addUser({ id: email, userName: name, userImage: image }));
@@ -31,24 +56,5 @@ const Layout = (props) => {
   );
 };
 
-// export const getServerSideProps = async (context) => {
-//   const session = await getSession({ req: context.req });
-
-//   console.log("context");
-
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {
-//       session,
-//     },
-//   };
-// };
 
 export default Layout;

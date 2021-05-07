@@ -6,7 +6,6 @@ import classes from './experience.module.css'
 const Experiences = (props) => {
   const {noMargin, posts} = props
 
-  console.log(posts);
 
   return (
     <div className={classes.div} style={noMargin && {marginTop:0}}>

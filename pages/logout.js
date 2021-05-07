@@ -8,7 +8,7 @@ const Logout = (props) => {
     signOut()
       .then(() => {})
       .catch((e) => console.log(e));
-    router.replace("/");
+    router.replace("/login");
   }
 
   
@@ -28,7 +28,7 @@ export const getServerSideProps = async (context) => {
   } else {
     return {
       redirect: {
-        destination: "/",
+        destination: "/login",
       },
     };
   }

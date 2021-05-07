@@ -5,7 +5,6 @@ import {useRouter} from 'next/router'
 
 const Experience = (props) => {
   const { id, description, imageUrl, userName, userImage } = props;
-  console.log(id);
   const router = useRouter()
 
   return (
@@ -25,10 +24,7 @@ const Experience = (props) => {
       src={imageUrl}
        />
 
-      <div className={classes.bottom}>
-        <LinkedCamera />
-        <Comment />
-      </div>
+      
 
     </article>
   );

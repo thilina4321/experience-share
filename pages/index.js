@@ -2,37 +2,14 @@ import Head from "next/head";
 import Experiences from "../components/experience/experiences";
 import styles from "../styles/Home.module.css";
 
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
-import {posts as postSlice} from '../store/slices/postsSlice'
 
 export default function Home() {
 
   const allPosts = useSelector(state => state.posts.posts)
 
-  const dispatch = useDispatch()
-
   
-  useEffect(()=>{
-    const fetchExperiences = async()=>{
-      const userPosts = []
-      const res = await fetch('/api/user/posts')
-      const posts = await res.json()
-      posts.posts.forEach(element => {
-        userPosts.push({id:element._id, description:element.description,
-           imageUrl:element.imageUrl,
-        userName:element.userId.userName, userImage:element.userId.profileImage})
-      });
-      
-      dispatch(postSlice.allPosts(userPosts))
-
-    } 
-
-
-      fetchExperiences()
-    
-  } ,[])
   
 
   return (

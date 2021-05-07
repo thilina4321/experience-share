@@ -1,24 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Experience from "../../components/experience/experience";
-import { posts as postSlice } from "../../store/slices/postsSlice";
-import { useSession } from "next-auth/client";
-import { useDispatch } from "react-redux";
 import Send from "@material-ui/icons/Send";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import Comment from "../../components/experience/comment";
+import { getSession, useSession } from "next-auth/client";
 
 const PostPage = (props) => {
-  const [session] = useSession();
-  const dispatch = useDispatch();
+  const [session, loading] = useSession();
   const commentRef = useRef();
   const [error, seterror] = useState("");
   const [isLoading, setisLoading] = useState(false);
   const { id } = props.query;
   const posts = useSelector((state) => state.posts.posts);
-  const { imageUrl, userName, userImage, description } = posts.find(
-    (post) => post.id === id
-  );
+  let post;
+  if (posts) {
+    post = posts.find((post) => post.id === id);
+  }
+
 
   const [comments, setcomments] = useState([]);
 
@@ -31,9 +31,10 @@ const PostPage = (props) => {
           setisLoading(false);
           seterror("Some thing went wrong");
         }
+        setisLoading(false);
 
         const comment = await response.json();
-        setcomments(comment.comments)
+        setcomments(comment.comments);
       }
     };
     fetchComments();
@@ -60,37 +61,48 @@ const PostPage = (props) => {
       setisLoading(false);
       seterror("Some thing went wrong");
     }
+    setisLoading(false);
 
     const comment = await response.json();
-    console.log(comment);
-    //   dispatch(postSlice.addComment(comment))
+    setcomments((pre) => [...pre, { ...comment.response }]);
+    commentRef.current.value = "";
   };
 
   return (
     <section style={{ marginTop: "100px" }}>
-      <Experience
-        id={id}
-        imageUrl={imageUrl}
-        description={description}
-        userName={userName}
-        userImage={userImage}
-      />
-      <form onSubmit={onSubmitComment} style={{ display: "flex" }}>
+      {post && (
+        <Experience
+          id={id}
+          imageUrl={post.imageUrl}
+          description={post.description}
+          userName={post.userName}
+          userImage={post.userImage}
+        />
+      )}
+
+      <form
+        onSubmit={onSubmitComment}
+        style={{ display: "flex", width: "98%", margin: "0 auto" }}
+      >
         <textarea
           ref={commentRef}
-          style={{ flex: "1" }}
+          style={{ flex: "1", margin: "5px", padding: "5px" }}
           ref={commentRef}
           style={{ width: "100%" }}
           placeholder="Write Here"
         />
         <Button type="submit">
-          {" "}
-          <Send />{" "}
+          {isLoading ? <CircularProgress /> : <Send />}
         </Button>
       </form>
 
-      {comments.map(comment=> <Comment key={comment.id} name={comment.owner} comment={comment.comment} /> )}
-      
+      { post && comments.map((comment) => (
+        <Comment
+          key={comment._id}
+          name={comment.owner}
+          comment={comment.comment}
+        />
+      ))}
     </section>
   );
 };
@@ -98,6 +110,16 @@ const PostPage = (props) => {
 export default PostPage;
 
 export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+  console.log(session);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
   const query = await context.query;
 
   return {

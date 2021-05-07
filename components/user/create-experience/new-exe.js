@@ -18,13 +18,11 @@ const NewExe = () => {
 
   const imageRef = useRef();
 
-  console.log(user);
 
   const router = useRouter();
 
   useEffect(() => {
     if (file) {
-      console.log("yes");
       let fileReader = new FileReader();
       fileReader.onload = () => setImage(fileReader.result);
       fileReader.readAsDataURL(file);
@@ -56,7 +54,6 @@ const NewExe = () => {
     }
 
     const res = await addPost.json();
-    console.log(res);
   };
 
   const onImageHandler = () => {

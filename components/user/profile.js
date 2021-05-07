@@ -21,12 +21,13 @@ const Profile = () => {
   const [mySelf, setMySelf] = useState()
 
   // posts
-  const [posts, setPosts] = useState([])
-
+  
   const imageRef = useRef();
-
+  
   const user = useSelector((state) => state.user.user);
-  console.log(user);
+  const allPosts = useSelector(state => state.posts.posts)
+  
+  const posts = allPosts.filter(post=> post.userName == user.userName)
 
   if (!user) {
     router.push("/");
@@ -44,19 +45,7 @@ const Profile = () => {
   }, [file]); 
 
 
-  useEffect(()=>{
-    const fetchExperiences = async()=>{
-      const res = await fetch('/api/user/' + user.id)
-      const posts = await res.json()
-      setPosts(posts.posts)
-
-    }
-
-    if(user && user.id){
-
-      fetchExperiences()
-    }
-  } ,[user])
+  
 
   useEffect(()=>{
     const me = async()=>{
@@ -112,7 +101,6 @@ const Profile = () => {
     router.push('/experience')
   }
 
-  console.log(mySelf);
   
 
   return (
