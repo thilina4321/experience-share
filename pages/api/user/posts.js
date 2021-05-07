@@ -2,33 +2,6 @@ import {connectDB} from '../../../db/database'
 import Post from '../../../model/exe'
 const cloudinary = require('cloudinary').v2
 
-import Cors from 'cors'
-
-// Initializing the cors middleware
-const cors = Cors({
-  origin:"*",
-
-  methods: ['GET', 'HEAD', 'OPTIONS', 'POST', 'PUT', 'DELETE', 'PATCH'],
-})
-
-// Helper method to wait for a middleware to execute before continuing
-// And to throw an error when an error happens in a middleware
-function runMiddleware(req, res, fn) {
-
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result)
-      }
-
-      return resolve(result)
-    })
-  })
-}
-
-
-
-
 cloudinary.config({ 
     cloud_name: process.env.cloud_name, 
     api_key: process.env.api_key, 
@@ -44,10 +17,9 @@ cloudinary.config({
   }
 
 export default async(req,res)=>{
-    const {imageUrl, userId, description} = req.body
-
-    await runMiddleware(req, res, cors)
+    
     if(req.method == 'POST'){
+        const {imageUrl, userId, description} = req.body
         try {
 
             const image = await cloudinary.uploader.upload(imageUrl)

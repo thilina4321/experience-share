@@ -1,25 +1,25 @@
 import Head from "next/head";
 import Experiences from "../components/experience/experiences";
 import styles from "../styles/Home.module.css";
-import { getSession } from "next-auth/client";
 
-import {user} from './../store/slices/userSlice'
-import {useDispatch, useSelector} from 'react-redux'
 import { useEffect, useState } from "react";
+
 
 
 export default function Home(props) {
 
   const [posts, setPosts] = useState([]);
+
+  console.log(props.allPosts);
   
   useEffect(()=>{
     const fetchExperiences = async()=>{
-      const res = await fetch(process.env.PORT + '/api/user/posts')
+      const res = await fetch('/api/user/posts')
       const posts = await res.json()
       console.log(posts.posts);
       setPosts(posts.posts)
 
-    }
+    } 
 
 
       fetchExperiences()

@@ -84,8 +84,7 @@ const Profile = () => {
   const onAddHandler = async () => {
     try {
       setLoading(true);
-      const userImage = await fetch(
-        process.env.PORT + "/api/user/profile-image",
+      const userImage = await fetch("/api/user/profile-image",
         {
           method: "POST",
           body: JSON.stringify({ url: image, id: user.id }),
