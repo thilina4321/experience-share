@@ -1,4 +1,6 @@
 import Profile from '../components/user/profile'
+import {getSession} from 'next-auth/client'
+
 const UserPage = () => {
     return (
         <div>

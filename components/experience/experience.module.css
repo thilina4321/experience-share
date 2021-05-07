@@ -1,17 +1,13 @@
-.div{
-    margin-top: 100px;
-    min-height: 100vh;
-}
-
 .article{
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    width: 98%;
-    margin: 10px auto;
+    flex-wrap: wrap;
+    max-width: 500px;
     margin-bottom: 20px;
     box-shadow: 0 2px 2px 2px rgba(0,0,0,0.26);
+    margin-left:0;
+    margin-right:0;
 }
 
 .article p{

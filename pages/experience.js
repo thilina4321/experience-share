@@ -1,4 +1,6 @@
+import {getSession} from 'next-auth/client'
 import NewExe from '../components/user/create-experience/new-exe'
+
 const Experience = () => {
     return (
         <div>
