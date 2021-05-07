@@ -27,7 +27,7 @@ const Singup = () => {
 
     try {
       setIsLoading(true);
-      const user = await fetch("http://localhost:3000/api/auth/signup-api", {
+      const user = await fetch("/api/auth/signup-api", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, userName, password }),
