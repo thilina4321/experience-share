@@ -92,11 +92,13 @@ const Profile = () => {
         }
       );
       if (!userImage.ok) {
-        setOpen(false);
+        setOpen(false); 
         setLoading(false);
       }
 
       const resData = await userImage.json();
+      dispatch(userSlice.addImage(resData.image))
+      
       setOpen(false);
       setLoading(false);
     } catch (error) {}

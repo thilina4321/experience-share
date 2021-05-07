@@ -1,16 +1,7 @@
 import Experience from "./experience";
 import classes from './experience.module.css'
-const experiences = [
-  {
-    id: 1,
-    user: "thilina",
-    userImage: "/kate-darmody-Ux1rd5Unk1k-unsplash.jpg",
-    description:
-      "This is a very good place. I saw so many things from this places",
-    imageUrl: "/kate-darmody-Ux1rd5Unk1k-unsplash.jpg",
-  },
-  
-];
+
+
 
 const Experiences = (props) => {
   const {noMargin, posts} = props
@@ -19,10 +10,12 @@ const Experiences = (props) => {
 
   return (
     <div className={classes.div} style={noMargin && {marginTop:0}}>
-      {posts.map(({  _id, imageUrl, description,userId }) => (
+      {posts.map(({  id, imageUrl, description,userName, userImage }) => (
         <Experience
-          key={_id}
-          user={userId}
+          key={id}
+          id={id}
+          userName={userName}
+          userImage={userImage}
           description={description}
           imageUrl={imageUrl}
         />

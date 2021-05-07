@@ -12,7 +12,6 @@ export default async(req,res)=>{
 
             await connectDB()
             const user = await User.findById(userId)
-            console.log(user);
             res.status(200).send({user: user})
         } catch (error) {
             res.status(500).send({error:error.message})
