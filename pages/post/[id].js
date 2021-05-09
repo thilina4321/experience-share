@@ -69,7 +69,7 @@ const PostPage = (props) => {
   };
 
   return (
-    <section style={{ marginTop: "100px" }}>
+    <section style={{ marginTop: "100px" , textAlign:'center' }}>
       {post && (
         <Experience
           id={id}
