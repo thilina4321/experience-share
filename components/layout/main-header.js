@@ -40,9 +40,9 @@ const MainHeader = () => {
   const [session, loading] = useSession()
 
 
-  if(session && session.user){
+  if(session){
     pages = ["/",  "/user", "/experience", "/logout" ]
-    items = ["Experiences", "User", "Experience", "Logout"]
+    items = ["Experiences", "User", "New Experience", "Logout"]
     icons = [
       <Person />,
       <Beenhere />,
@@ -52,10 +52,9 @@ const MainHeader = () => {
       
     ];
   }else{
-    pages = ["/", "/login", "/sign-up" ]
-    items = ["Experiences","Login", "Signup"]
+    pages = [ "/login", "/sign-up" ]
+    items = ["Login", "Signup"]
     icons =  [
-      <Person />,
       <Beenhere />,
       <Bookmark />
       

@@ -7,15 +7,11 @@ const Desktop = () => {
   console.log(session);
   return (
     <header className={classes.header}>
-      <h1 className={classes.h1}> THILINA </h1>
+      <h1 className={classes.h1}> Experiences </h1>
 
       {!session ? (
         <div className={classes.elements}>
-          <Link href="/">
-            <a>
-              <p> EXPERIENCES </p>
-            </a>
-          </Link>
+          
           <Link href="/login">
             <a>
               <p> LOG IN </p>

@@ -3,6 +3,7 @@ import Experiences from "../components/experience/experiences";
 import styles from "../styles/Home.module.css";
 
 import {  useSelector } from "react-redux";
+import {getSession} from 'next-auth/client'
 
 
 export default function Home() {
@@ -25,3 +26,20 @@ export default function Home() {
   );
 }
 
+export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if (session) {
+    return {
+      props: {
+        session,
+      },
+    };
+  } else {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
+};
