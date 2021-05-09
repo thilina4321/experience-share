@@ -19,7 +19,6 @@ const PostPage = (props) => {
     post = posts.find((post) => post.id === id);
   }
 
-
   const [comments, setcomments] = useState([]);
 
   useEffect(() => {
@@ -69,7 +68,15 @@ const PostPage = (props) => {
   };
 
   return (
-    <section style={{ marginTop: "100px" , textAlign:'center' }}>
+    <section
+      style={{
+        marginTop: "100px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       {post && (
         <Experience
           id={id}
@@ -96,13 +103,14 @@ const PostPage = (props) => {
         </Button>
       </form>
 
-      { post && comments.map((comment) => (
-        <Comment
-          key={comment._id}
-          name={comment.owner}
-          comment={comment.comment}
-        />
-      ))}
+      {post &&
+        comments.map((comment) => (
+          <Comment
+            key={comment._id}
+            name={comment.owner}
+            comment={comment.comment}
+          />
+        ))}
     </section>
   );
 };
