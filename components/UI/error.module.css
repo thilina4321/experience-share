@@ -1,0 +1,8 @@
+.dialog{
+    height: max-content;
+    width: 300px;
+    padding: 20px;
+    background: linear-gradient(rgb(139, 139, 172), rgb(82, 182, 207));
+    color: white;
+    
+}

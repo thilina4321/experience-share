@@ -67,3 +67,10 @@
     width: 50px;
     border-radius: 50%;
 }
+
+.user__buttons{
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    color: orange;
+}

@@ -4,7 +4,6 @@ import classes from "./desktop.module.css";
 
 const Desktop = () => {
   const [session, loading] = useSession();
-  console.log(session);
   return (
     <header className={classes.header}>
       <h1 className={classes.h1}> Experiences </h1>

@@ -19,6 +19,11 @@
     visibility: hidden;
 }
 
+.img{
+    width: 100%;
+    height: 300px;
+}
+
 .sDialog , .eDialog{
     background-color: black;
     color: green;

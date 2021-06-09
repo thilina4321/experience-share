@@ -20,14 +20,14 @@ const Profile = () => {
 
   const [mySelf, setMySelf] = useState()
 
-  // posts
   
   const imageRef = useRef();
   
   const user = useSelector((state) => state.user.user);
   const allPosts = useSelector(state => state.posts.posts)
+
+  const posts = allPosts.filter(post => post.userId == user.id);
   
-  const posts = allPosts.filter(post=> post.userName == user.userName)
 
   if (!user) {
     router.push("/");
@@ -146,7 +146,7 @@ const Profile = () => {
       <Button onClick={onAddExperience} color="primary" > ADD EXPERIENCE </Button>
       <h3> Your Experiences </h3>
 
-      <Experiences posts={posts} noMargin={true} />
+      <Experiences posts={posts} user={true} noMargin={true} />
     </section>
   );
 };

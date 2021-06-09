@@ -1,25 +1,50 @@
 import Button from "@material-ui/core/Button";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import classes from "./new.exe.module.css";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHttp } from "../../../hooks/use-http";
+import Error from "../../UI/error";
+import Success from "../../UI/success";
+import { posts } from "../../../store/slices/postsSlice";
 
 const NewExe = () => {
   const labelRef = useRef();
   const [image, setImage] = useState();
   const [file, setFile] = useState();
-  const [error, setError] = useState();
-  const [success, setSuccess] = useState();
-  const [loading, setLoading] = useState(false);
+  const [post, setPost] = useState();
+
+  const [errorOpen, seterrorOpen] = useState(false);
+  const [successOpen, setsuccessOpen] = useState(false);
+
+  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.user);
 
+  const { sendRequest, loading, error, data } = useHttp();
+  const {
+    sendRequest: addPostRequest,
+    loading: postLoading,
+    error: postError,
+    data: addPostData,
+  } = useHttp();
+
   const imageRef = useRef();
 
-
   const router = useRouter();
+
+  useEffect(() => {
+    const applyData = (data) => {
+      setImage(data.post.imageUrl);
+      labelRef.current.value = data.post.description;
+    };
+    if (router.query.id) {
+      sendRequest({ url: `/api/selectPost?id=${router.query.id}` }, applyData);
+    }
+  }, [sendRequest]);
+
 
   useEffect(() => {
     if (file) {
@@ -29,31 +54,63 @@ const NewExe = () => {
     }
   }, [file]);
 
+  const postData = (data) => {
+    dispatch(posts.editPost({
+      ...data.post,
+      userImage: user.userImage,
+      userName: user.userName,
+    }));
+  };
+
+  const addPost = (data) => {
+    dispatch(
+      posts.addPost({
+        ...data.post,
+        userImage: user.userImage,
+        userName: user.userName,
+      })
+    );
+  };
+
   const dataHandler = async (event) => {
     event.preventDefault();
     const label = labelRef.current.value;
 
-    setLoading(true);
-    const addPost = await fetch("/api/user/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        imageUrl: image,
-        description: label,
-        userId: user.id,
-      }),
-    });
-
-    setLoading(false);
-    if (!addPost.ok) {
-      setError("Sorry this action is failed");
+    if (router.query.id) {
+      addPostRequest(
+        {
+          url: "/api/user/posts",
+          method: "PATCH",
+          body: {
+            id: router.query.id,
+            imageUrl: image,
+            description: label,
+            userId: user.id,
+            isImageEdit: image != data.post.imageUrl,
+          },
+        },
+        postData
+      );
     } else {
-      setSuccess("Post successfully added");
-      labelRef.current.value = "";
-      setImage("");
+      addPostRequest(
+        {
+          url: "/api/user/posts",
+          method: "POST",
+          body: {
+            imageUrl: image,
+            description: label,
+            userId: user.id,
+          },
+        },
+        addPost
+      );
     }
 
-    const res = await addPost.json();
+    if (!postLoading && postError) {
+      seterrorOpen(true);
+    } else {
+      setsuccessOpen(true);
+    }
   };
 
   const onImageHandler = () => {
@@ -64,20 +121,22 @@ const NewExe = () => {
     setFile((pre) => event.target.files[0]);
   };
 
-  const onCloseDialog = () => {
-    setError("");
-  };
+  const onCloseDialog = useCallback(() => {
+    setsuccessOpen(false);
+    seterrorOpen(false);
+  }, []);
 
   const onNavigate = () => {
-    setSuccess("");
+    setsuccessOpen(false);
     router.push("/user");
   };
 
   return (
-    <section>
+    <section style={{ width: "100%" }}>
       <form className={classes.section} onSubmit={dataHandler}>
         <label> Experience </label>
         <textarea placeholder="write here" ref={labelRef} rows="6" />
+
         <input
           className={classes.input}
           onChange={onFileChange}
@@ -85,46 +144,29 @@ const NewExe = () => {
           type="file"
           accept="image/*"
         />
-        {image && <Image src={image} width={500} height={300} />}
+        {image && <img className={classes.img} src={image} />}
         <Button onClick={onImageHandler} color="primary" type="button">
           {" "}
           ADD IMAGE{" "}
         </Button>
-        <Button color="primary" type="submit">
-          {" "}
-          SAVE{" "}
-        </Button>
 
-        {loading && <CircularProgress />}
+        {router.query.id ? (
+          <Button color="primary" type="submit">
+            {" "}
+            EDIT{" "}
+          </Button>
+        ) : (
+          <Button color="primary" type="submit">
+            {" "}
+            SAVE{" "}
+          </Button>
+        )}
 
-        {success && (
-          <dialog open className={classes.sDialog}>
-            {" "}
-            <div>
-              <p> {success} </p>
-              <div style={{ textAlign: "end" }}>
-                <Button color="primary" onClick={onNavigate}>
-                  {" "}
-                  OK{" "}
-                </Button>
-              </div>
-            </div>{" "}
-          </dialog>
-        )}
-        {error && (
-          <dialog open className={classes.eDialog}>
-            {" "}
-            <div>
-              <p> {error} </p>
-              <div style={{ textAlign: "end" }}>
-                <Button color="primary" onClick={onCloseDialog}>
-                  {" "}
-                  OK{" "}
-                </Button>
-              </div>
-            </div>{" "}
-          </dialog>
-        )}
+        {postLoading && <CircularProgress />}
+
+        <Success CloseDialog={onNavigate} open={successOpen}></Success>
+
+        <Error CloseDialog={onCloseDialog} open={errorOpen}></Error>
       </form>
     </section>
   );

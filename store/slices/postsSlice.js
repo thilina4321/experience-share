@@ -13,23 +13,34 @@ const postsSlice = createSlice({
         }
 ,
         addPost(state, action){
-            const {id, description, imageUrl, userName,
+            const {_id, description, imageUrl, userName,userId,
                  userImage, comments = []} = action.payload
-            state.posts = [...state.posts, {id, description, imageUrl, userName, userImage}]
+
+            state.posts = [...state.posts, {id:_id, description,
+                userId,
+                 imageUrl, userName, userImage}]
         },
 
+        editPost(state,action){
+            const getPost = {...action.payload, id:action.payload._id}
+            delete getPost._id
+            const findPostIndex = state.posts.findIndex(post=> post.id == action.payload._id)
+            state.posts[findPostIndex] = getPost
+        },
+
+        
+
+        deletePost(state, action){
+            const id = action.payload.id
+            const posts = state.posts.filter(post=> post.id !== id )
+            state.posts = posts
+        },
         addComment(state, action){
             const {id, postId, comment, owner } = action.payload
             const postIndex = state.posts.findIndex(post=> post.id === action.payload.id)
             state.posts[postIndex].comments.push({id, postId, comment, owner})
 
         },
-
-        deletePost(state, action){
-            const id = action.payload.id
-            const posts = state.filter(post=> post.id !== id )
-            state = posts
-        }
 
 
     }

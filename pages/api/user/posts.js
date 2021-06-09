@@ -43,8 +43,8 @@ export default async(req,res)=>{
     }
 
     if(req.method == 'DELETE'){
+        const {id} = req.query
         try {
-
 
             await connectDB()
             const post = await Post.findByIdAndDelete(id)
@@ -56,11 +56,21 @@ export default async(req,res)=>{
 
     if(req.method == 'PATCH'){
         const data = req.body
+        const id = data.id
         try {
 
+            let image ;
+            if(data.isImageEdit){
+                 let newImage = await cloudinary.uploader.upload(imageUrl)
+                 image = newImage.url
+
+            }else{
+                image = data.imageUrl
+            }
 
             await connectDB()
-            const post = await Post.findByIdAndUpdate(id, {...data}, {new:true})
+            const post = await Post.findByIdAndUpdate(id, {...data, imageUrl:image}, {new:true})
+            console.log(post);
             res.status(200).send({post})
         } catch (error) {
             res.status(500).send({error:error.message})

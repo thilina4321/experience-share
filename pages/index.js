@@ -10,6 +10,8 @@ export default function Home() {
 
   const allPosts = useSelector(state => state.posts.posts)
 
+  console.log(allPosts);
+
   
   
 

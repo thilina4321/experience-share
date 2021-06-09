@@ -23,11 +23,11 @@ const Layout = (props) => {
       posts.posts.forEach(element => {
         userPosts.push({id:element._id, description:element.description,
            imageUrl:element.imageUrl,
+           userId:element.userId._id,
         userName:element.userId.userName, userImage:element.userId.profileImage})
       });
       
       dispatch(postSlice.allPosts(userPosts))
-      console.log('hello');
 
     } 
 
