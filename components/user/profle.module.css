@@ -48,3 +48,15 @@ margin-left: 20px;
     width: 150px;
     border-radius: 50%;
 }
+
+.profile__pic__dialog{
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__pic__dialog > .btn{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}

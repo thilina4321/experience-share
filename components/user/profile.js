@@ -18,22 +18,18 @@ const Profile = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  const [mySelf, setMySelf] = useState()
+  const [mySelf, setMySelf] = useState();
 
-  
   const imageRef = useRef();
-  
-  const user = useSelector((state) => state.user.user);
-  const allPosts = useSelector(state => state.posts.posts)
 
-  const posts = allPosts.filter(post => post.userId == user.id);
-  
+  const user = useSelector((state) => state.user.user);
+  const allPosts = useSelector((state) => state.posts.posts);
+
+  const posts = allPosts.filter((post) => post.userId == user.id);
 
   if (!user) {
     router.push("/");
   }
-
-  
 
   useEffect(() => {
     if (file) {
@@ -41,26 +37,21 @@ const Profile = () => {
       fileReader.onload = () => setImage(fileReader.result);
       fileReader.readAsDataURL(file);
       setOpen(true);
-    } 
-  }, [file]); 
+    }
+  }, [file]);
 
-
-  
-
-  useEffect(()=>{
-    const me = async()=>{
-      const res = await fetch('/api/me/' + user.id)
-      const meName = await res.json()
-      setMySelf(meName.user)
+  useEffect(() => {
+    const me = async () => {
+      const res = await fetch("/api/me/" + user.id);
+      const meName = await res.json();
+      setMySelf(meName.user);
       // setPosts(posts.posts)
+    };
 
+    if (user && user.id) {
+      me();
     }
-
-    if(user && user.id){
-
-      me()
-    }
-  } ,[user])
+  }, [user]);
 
   const onImageHandler = () => {
     imageRef.current.click();
@@ -73,21 +64,19 @@ const Profile = () => {
   const onAddHandler = async () => {
     try {
       setLoading(true);
-      const userImage = await fetch("/api/user/profile-image",
-        {
-          method: "POST",
-          body: JSON.stringify({ url: image, id: user.id }),
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const userImage = await fetch("/api/user/profile-image", {
+        method: "POST",
+        body: JSON.stringify({ url: image, id: user.id }),
+        headers: { "Content-Type": "application/json" },
+      });
       if (!userImage.ok) {
-        setOpen(false); 
+        setOpen(false);
         setLoading(false);
       }
 
       const resData = await userImage.json();
-      dispatch(userSlice.addImage(resData.image))
-      
+      dispatch(userSlice.addImage(resData.image));
+
       setOpen(false);
       setLoading(false);
     } catch (error) {}
@@ -97,27 +86,20 @@ const Profile = () => {
     setOpen(false);
   };
 
-  const onAddExperience = ()=>{
-    router.push('/experience')
-  }
-
-  
+  const onAddExperience = () => {
+    router.push("/experience");
+  };
 
   return (
     <section className={classes.section}>
-    <div className={classes.user}>
-    { mySelf && mySelf.profileImage != undefined ? (
-      <img
-        className={classes.img}
-        src={mySelf.profileImage}
-        width={110}
-        height={120}
-      />
-    ) : (
-      <div className={classes.avatar} />
-    )}
-    <h1 className={classes.h1}> {mySelf && mySelf.userName} </h1>
-  </div>
+      <div className={classes.user}>
+        {mySelf && mySelf.profileImage != undefined ? (
+          <img className={classes.img} src={mySelf.profileImage} />
+        ) : (
+          <div className={classes.avatar} />
+        )}
+        <h1 className={classes.h1}> {mySelf && mySelf.userName} </h1>
+      </div>
 
       <input
         className={classes.input}
@@ -129,11 +111,15 @@ const Profile = () => {
 
       {image && (
         <dialog open={open} className={classes.imageDialog}>
-          <div style={{ textAlign: "end" }}>
+          <div class={classes.profile__pic__dialog}>
             <Image src={image} width={500} height={300} />
-            <Button onClick={onCancelHandler}> Cancle </Button>
-            <Button onClick={onAddHandler}> ADD Image </Button>
-            <div>{loading && <CircularProgress />}</div>
+            {!loading && <div className={classes.btn}>
+              <Button onClick={onCancelHandler}> Cancle </Button>
+              <Button onClick={onAddHandler}> ADD Image </Button>
+              </div>}
+              <div className={classes.btn}>
+              {loading && <CircularProgress />}
+              </div>
           </div>{" "}
         </dialog>
       )}
@@ -143,7 +129,10 @@ const Profile = () => {
         ADD IMAGE{" "}
       </Button>
 
-      <Button onClick={onAddExperience} color="primary" > ADD EXPERIENCE </Button>
+      <Button onClick={onAddExperience} color="primary">
+        {" "}
+        ADD EXPERIENCE{" "}
+      </Button>
       <h3> Your Experiences </h3>
 
       <Experiences posts={posts} user={true} noMargin={true} />

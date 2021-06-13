@@ -63,6 +63,7 @@ const NewExe = () => {
   };
 
   const addPost = (data) => {
+    console.log(user.userImage)
     dispatch(
       posts.addPost({
         ...data.post,
@@ -77,7 +78,7 @@ const NewExe = () => {
     const label = labelRef.current.value;
 
     if (router.query.id) {
-      addPostRequest(
+      await addPostRequest(
         {
           url: "/api/user/posts",
           method: "PATCH",
@@ -92,7 +93,7 @@ const NewExe = () => {
         postData
       );
     } else {
-      addPostRequest(
+      await addPostRequest(
         {
           url: "/api/user/posts",
           method: "POST",
@@ -133,7 +134,8 @@ const NewExe = () => {
 
   return (
     <section style={{ width: "100%" }}>
-      <form className={classes.section} onSubmit={dataHandler}>
+      <form className={classes.section} 
+      onSubmit={dataHandler}>
         <label> Experience </label>
         <textarea placeholder="write here" ref={labelRef} rows="6" />
 
@@ -156,7 +158,8 @@ const NewExe = () => {
             EDIT{" "}
           </Button>
         ) : (
-          <Button color="primary" type="submit">
+          <Button color="primary" 
+          type="submit">
             {" "}
             SAVE{" "}
           </Button>

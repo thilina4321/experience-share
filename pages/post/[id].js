@@ -89,13 +89,16 @@ const PostPage = (props) => {
 
       <form
         onSubmit={onSubmitComment}
-        style={{ display: "flex", width: "98%", margin: "0 auto" }}
+        style={{ display: "flex", width: "80%", margin: "0 auto" }}
       >
         <textarea
+        rows="6"
           ref={commentRef}
-          style={{ flex: "1", margin: "5px", padding: "5px" }}
+          style={{ flex: "1", margin: "5px", 
+          padding: "5px" }}
           ref={commentRef}
-          style={{ width: "100%" }}
+        
+          style={{ width: "80%" }}
           placeholder="Write Here"
         />
         <Button type="submit">

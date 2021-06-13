@@ -4,6 +4,7 @@
     flex-direction: column;
     justify-content: center;
     max-width: 500px;
+    width: 500px;
     margin-bottom: 20px;
     box-shadow: 0 2px 2px 2px rgba(0,0,0,0.26);
     margin-right:10px;
@@ -16,7 +17,7 @@
 }
 
 .div{
-    margin-top: 50px;
+    margin-top: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -53,6 +54,8 @@
     height: 250px;
     width: 100%;
     max-width: 500px;
+    cursor: pointer;
+
 }
 
 .pro{
