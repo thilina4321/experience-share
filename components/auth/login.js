@@ -29,16 +29,16 @@ const Login = () => {
     }
 
     setIsLoading(true)
-    const user = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-    setIsLoading(false)
-    if (!user) {
-      setError(user.error);
-      return
-    }
+    // const user = await signIn("credentials", {
+    //   redirect: false,
+    //   email,
+    //   password,
+    // });
+    // setIsLoading(false)
+    // if (!user) {
+    //   setError(user.error);
+    //   return
+    // }
 
     router.replace('/')
     
