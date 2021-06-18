@@ -6,7 +6,9 @@ import classes from './experience.module.css'
 const Experiences = (props) => {
   const {noMargin, posts, user = false} = props
 
-
+  if(!posts){
+    return <div> No Posts yet.. </div>
+  }
   return (
     <div className={classes.div} style={noMargin && {marginTop:0}}>
       {posts.map(({  id, imageUrl, description,userName, userImage }) => (

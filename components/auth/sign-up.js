@@ -35,7 +35,6 @@ const Singup = () => {
       setIsLoading(false);
 
       const a = await user.json()
-      console.log(a);
 
       if (user.status == 200) {
         setIsError({ error: true, msg: "Email already taken" });
