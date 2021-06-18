@@ -19,7 +19,7 @@ const Layout = (props) => {
       const res = await fetch("/api/user/posts");
       const posts = await res.json();
 
-      if(posts){
+      if(posts && posts.posts){
         posts.posts.forEach((element) => {
           userPosts.push({
             id: element._id,
