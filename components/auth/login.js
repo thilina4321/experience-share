@@ -1,21 +1,18 @@
 import { useRef, useState } from "react";
 import classes from "./login.module.css";
 import Button from "@material-ui/core/Button";
-import {useRouter } from 'next/router'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import { useRouter } from "next/router";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { signIn } from "next-auth/client";
 
 const Login = () => {
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const router = useRouter()
-
-
-  
+  const router = useRouter();
 
   const onLoginHandler = async (event) => {
     event.preventDefault();
@@ -23,29 +20,26 @@ const Login = () => {
     const password = passwordRef.current.value;
     // router.replace('/')
 
-    if(!email || !password ){
-      setError('please enter required data')
-      return 
+    if (!email || !password) {
+      setError("please enter required data");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     const user = await signIn("credentials", {
       redirect: false,
-      email,
-      password,
+      email: email,
+      password: password,
     });
     console.log(user);
-    setIsLoading(false)
+    setIsLoading(false);
     if (!user) {
       setError(user.error);
-      return
+      return;
     }
 
-    router.replace('/')
-    
-    
+    router.replace("/");
   };
-
 
   const errorCancleHandler = () => {
     setError("");
