@@ -35,7 +35,7 @@ const Login = () => {
       password,
     });
     setIsLoading(false)
-    if (user.error) {
+    if (!user) {
       setError(user.error);
       return
     }
