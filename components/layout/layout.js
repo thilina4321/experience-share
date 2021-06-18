@@ -11,12 +11,16 @@ const Layout = (props) => {
   const dispatch = useDispatch();
 
   const [session] = useSession();
-  console.log(props);
 
   useEffect(() => {
     const fetchExperiences = async () => {
       const userPosts = [];
       const res = await fetch("/api/user/posts");
+      
+      if(!res.ok){
+        return
+      }
+
       const posts = await res.json();
 
       if(posts && posts.posts){

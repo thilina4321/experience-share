@@ -34,6 +34,7 @@ const Login = () => {
       email,
       password,
     });
+    console.log(user);
     setIsLoading(false)
     if (!user) {
       setError(user.error);
