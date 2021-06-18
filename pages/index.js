@@ -12,7 +12,9 @@ export default function Home() {
 
 
   
-  
+  if(!allPosts){
+    return <div> Loading.. </div>
+  }
   
 
   return (
