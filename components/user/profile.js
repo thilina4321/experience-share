@@ -111,7 +111,7 @@ const Profile = () => {
 
       {image && (
         <dialog open={open} className={classes.imageDialog}>
-          <div class={classes.profile__pic__dialog}>
+          <div className={classes.profile__pic__dialog}>
             <Image src={image} width={500} height={300} />
             {!loading && <div className={classes.btn}>
               <Button onClick={onCancelHandler}> Cancle </Button>
