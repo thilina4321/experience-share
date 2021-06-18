@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Desktop from "./desktop";
 import MainHeader from "./main-header";
-import { useSession } from "next-auth/client";
+import { getSession, useSession } from "next-auth/client";
 import { posts as postSlice } from "../../store/slices/postsSlice";
 
 import { user } from "../../store/slices/userSlice";
@@ -11,6 +11,7 @@ const Layout = (props) => {
   const dispatch = useDispatch();
 
   const [session] = useSession();
+  console.log(props);
 
   useEffect(() => {
     const fetchExperiences = async () => {
@@ -55,3 +56,21 @@ const Layout = (props) => {
 };
 
 export default Layout;
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
+
+  if (session) {
+    return {
+      props: {
+        session,
+      },
+    };
+  } else {
+    return {
+      redirect: {
+        destination: "/login",
+      },
+    };
+  }
+};
