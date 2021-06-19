@@ -26,19 +26,27 @@ const Login = () => {
     }
 
     setIsLoading(true);
-    const user = await signIn("credentials", {
-      redirect: false,
-      email: email,
-      password: password,
-    });
-    console.log(user);
-    setIsLoading(false);
-    if (!user) {
-      setError(user.error);
-      return;
+    try {
+      const user = await signIn("credentials", {
+        redirect: false,
+        email: email,
+        password: password,
+      });
+      
+      console.log(user);
+      setIsLoading(false);
+      router.replace("/");
+      
+    } catch (error) {
+      setIsLoading(false);
+      if (!user) {
+        setError(user.error);
+        return;
+      }
     }
+    
+    
 
-    router.replace("/");
   };
 
   const errorCancleHandler = () => {
