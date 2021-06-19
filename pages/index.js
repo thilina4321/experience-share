@@ -10,7 +10,7 @@ export default function Home() {
 
   const allPosts = useSelector(state => state.posts.posts)
 
-
+  console.log(allPosts);
   
   if(!allPosts){
     return <div> Loading.. </div>

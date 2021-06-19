@@ -14,19 +14,18 @@ const Layout = (props) => {
 
   console.log(session);
 
-
   useEffect(() => {
     const fetchExperiences = async () => {
       const userPosts = [];
       const res = await fetch("/api/user/posts");
-      
-      if(!res.ok){
-        return
+
+      if (!res.ok) {
+        return;
       }
 
       const posts = await res.json();
 
-      if(posts && posts.posts){
+      if (posts && posts.posts) {
         posts.posts.forEach((element) => {
           userPosts.push({
             id: element._id,
@@ -38,18 +37,19 @@ const Layout = (props) => {
           });
         });
       }
-      
+
+      console.log(userPosts);
 
       dispatch(postSlice.allPosts(userPosts));
     };
 
-    if(session){
+    if (session) {
       fetchExperiences();
     }
-  }, []);
+  }, [session]);
 
   useEffect(() => {
-    if (session && session['user']) {
+    if (session && session["user"]) {
       const { image, email, name } = session["user"];
       dispatch(user.addUser({ id: email, userName: name, userImage: image }));
     }
@@ -65,5 +65,3 @@ const Layout = (props) => {
 };
 
 export default Layout;
-
-

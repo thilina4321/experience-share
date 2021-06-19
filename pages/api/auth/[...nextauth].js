@@ -37,7 +37,7 @@ export default NextAuth({
                     return {email:user._id, name:user.userName, image:user.profileImage}
 
                 } catch (error) {
-                    throw new Error(error.message + a || 'Something went wrong')
+                    throw new Error(error.message || 'Something went wrong')
                 }
 
 
