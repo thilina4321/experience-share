@@ -70,7 +70,6 @@ export default async(req,res)=>{
 
             await connectDB()
             const post = await Post.findByIdAndUpdate(id, {...data, imageUrl:image}, {new:true})
-            console.log(post);
             res.status(200).send({post})
         } catch (error) {
             res.status(500).send({error:error.message})

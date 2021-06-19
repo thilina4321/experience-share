@@ -10,6 +10,7 @@ import User from '../../../model/user'
 // import {comparePassword} from '../../../helper/hash'
 
 export default NextAuth({
+    
     session:{
         jwt:true,
     },

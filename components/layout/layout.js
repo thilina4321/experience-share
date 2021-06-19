@@ -12,6 +12,8 @@ const Layout = (props) => {
 
   const [session] = useSession();
 
+  console.log(session);
+
   useEffect(() => {
     const fetchExperiences = async () => {
       const userPosts = [];
@@ -40,7 +42,9 @@ const Layout = (props) => {
       dispatch(postSlice.allPosts(userPosts));
     };
 
-    fetchExperiences();
+    if(session){
+      fetchExperiences();
+    }
   }, []);
 
   useEffect(() => {
