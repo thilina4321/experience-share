@@ -5,7 +5,6 @@ export const connectDB = async () => {
     await mongoose.connect(process.env.DBURL, {
       useNewUrlParser: true,
     });
-    console.log("connext to database");
   } catch (error) {
     console.log(error.message);
   }

@@ -30,20 +30,20 @@ export default function Home() {
   );
 }
 
-export const getServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
+// export const getServerSideProps = async (context) => {
+//   const session = await getSession({ req: context.req });
 
-  if (session) {
-    return {
-      props: {
-        session,
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/login",
-      },
-    };
-  }
-};
+//   if (session) {
+//     return {
+//       props: {
+//         session,
+//       },
+//     };
+//   } else {
+//     return {
+//       redirect: {
+//         destination: "/login",
+//       },
+//     };
+//   }
+// };

@@ -20,6 +20,7 @@ export default NextAuth({
                 try {
                     // connect to the database
                     await connectDB()
+                    console.log(credentials);
 
                     const user = await User.findOne({email:credentials.email})
                     if(!user){
