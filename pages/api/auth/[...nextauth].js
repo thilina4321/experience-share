@@ -17,12 +17,14 @@ export default NextAuth({
     providers:[
         Provider.Credentials({
             async authorize(credentials){
+                let a;
                 try {
                     // connect to the database
                     await connectDB()
                     console.log(credentials);
 
                     const user = await User.findOne({email:credentials.email})
+                    a = user
                     if(!user){
                         throw new Error('User not found')
                     }
@@ -36,7 +38,7 @@ export default NextAuth({
                     return {email:user._id, name:user.userName, image:user.profileImage}
 
                 } catch (error) {
-                    throw new Error(error.message || 'Something went wrong')
+                    throw new Error(error.message + a || 'Something went wrong')
                 }
 
 
