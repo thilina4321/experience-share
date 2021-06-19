@@ -39,10 +39,8 @@ const Login = () => {
       
     } catch (error) {
       setIsLoading(false);
-      if (!user) {
-        setError(user.error);
-        return;
-      }
+      setError(error.message || error)
+      
     }
     
     
