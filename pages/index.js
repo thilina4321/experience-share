@@ -4,12 +4,16 @@ import styles from "../styles/Home.module.css";
 
 import {  useSelector } from "react-redux";
 import {getSession} from 'next-auth/client'
+import Login from "../components/auth/login";
 
 
-export default function Home() {
+export default function Home(props) {
+
+  if(props['session'] == null){
+    return <Login/>
+  }
 
   const allPosts = useSelector(state => state.posts.posts)
-
 
   
   if(!allPosts){
@@ -30,20 +34,14 @@ export default function Home() {
   );
 }
 
-// export const getServerSideProps = async (context) => {
-//   const session = await getSession({ req: context.req });
+export const getServerSideProps = async (context) => {
+  const session = await getSession({ req: context.req });
 
-//   if (session) {
-//     return {
-//       props: {
-//         session,
-//       },
-//     };
-//   } else {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//       },
-//     };
-//   }
-// };
+    return {
+      props: {
+        session,
+      },
+    };
+  
+  
+};
