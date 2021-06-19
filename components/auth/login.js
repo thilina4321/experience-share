@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import { useRouter } from "next/router";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { signIn } from "next-auth/client";
+import { signin } from "next-auth/client";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -27,13 +27,12 @@ const Login = () => {
 
     setIsLoading(true);
     try {
-      const user = await signIn("credentials", {
+      const user = await signin("credentials", {
         redirect: false,
         email: email,
         password: password,
       });
       
-      console.log(user);
       setIsLoading(false);
       router.replace("/");
       
