@@ -14,6 +14,7 @@ const Layout = (props) => {
 
   console.log(session);
 
+
   useEffect(() => {
     const fetchExperiences = async () => {
       const userPosts = [];
@@ -48,7 +49,7 @@ const Layout = (props) => {
   }, []);
 
   useEffect(() => {
-    if (session) {
+    if (session && session['user']) {
       const { image, email, name } = session["user"];
       dispatch(user.addUser({ id: email, userName: name, userImage: image }));
     }
@@ -65,20 +66,4 @@ const Layout = (props) => {
 
 export default Layout;
 
-export const getServerSideProps = async (context) => {
-  const session = await getSession({ req: context.req });
 
-  if (session) {
-    return {
-      props: {
-        session,
-      },
-    };
-  } else {
-    return {
-      redirect: {
-        destination: "/login",
-      },
-    };
-  }
-};
